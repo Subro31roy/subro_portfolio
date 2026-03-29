@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg-primary: #0D1117;
+  --color-bg-secondary: #161B22;
+  --color-bg-tertiary: #1C2128;
+  --color-accent-cyan: #00B4D8;
+  --color-accent-blue: #58A6FF;
+  --color-accent-green: #39D353;
+  --color-accent-orange: #F0883E;
+  --color-text-primary: #E6EDF3;
+  --color-text-secondary: #C9D1D9;
+  --color-text-muted: #8B949E;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: 'Satoshi', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Syne', sans-serif;
+}
+
+code, pre, .mono {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* Base custom styles to ensure Lenis works and hide scrollbars if needed */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Infinite marquee animations */
+@keyframes scrollX {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: scrollX 20s linear infinite;
+}
+.animate-marquee-slow {
+  animation: scrollX 40s linear infinite;
+}

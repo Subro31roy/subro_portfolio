@@ -1,0 +1,796 @@
+// CYBERSECURITY PORTFOLIO
+
+BUILD DIRECTION & ASSET GUIDE
+
+Subroto Roy | Security Analyst | subrotoroy1031@gmail.com
+
+01 | PROJECT OVERVIEW
+
+This document is a complete build direction for Subroto Roy's
+cybersecurity specialist portfolio. It follows the same UI/UX structure
+as the original template (Hero + Bento Grid) but replaces ALL content
+with cybersecurity-specific material derived from the CV.
+
+Identity
+
+-   Name: Subroto Roy
+
+-   Role: Cybersecurity Analyst & Researcher
+
+-   Location: Bogura, Bangladesh
+
+-   Email: subrotoroy1031@gmail.com
+
+-   Phone: (+880) 1705508201
+
+-   Education: BSc Cybersecurity & Digital Forensics — Gujarat
+    University (GPA 7.01)
+
+-   Current Role: Security Analyst @ DataCrata, Dhaka (Oct 2025 –
+    Present)
+
+-   Award: ICCR International Scholar 2022
+
+02 | TECH STACK
+
+Same as original template. No changes needed.
+
+React 18 + Vite
+
+Tailwind CSS
+
+GSAP (with ScrollTrigger)
+
+Framer Motion
+
+Lenis (smooth scroll)
+
+03 | SECTION 1: HERO (Scroll-Triggered Video)
+
+All behavior, frame generation, canvas animation, progressive batch
+loading, and responsive rules remain IDENTICAL to the original template
+spec. Only the visual content and text change.
+
+⚠ HERO VIDEO SETUP — REQUIRED (do this first or hero section will be blank):
+
+Step 1: Download a free dark cybersecurity video from Pexels.com
+        Search term: 'cyber network dark' or 'hacker terminal'
+        Download as MP4 and rename to: hero-video.mp4
+        Place it in: /public/hero-video.mp4
+
+Step 2: Generate frames from the video using this exact ffmpeg command:
+        mkdir -p public/frames
+        ffmpeg -i public/hero-video.mp4 \
+        -vf "fps=24,scale=1920:1080" \
+        -c:v libwebp -quality 85 \
+        -compression_level 6 \
+        -start_number 1 \
+        public/frames/frame_%04d.webp
+
+Step 3: Generate the poster (first frame) using this command:
+        ffmpeg -i public/hero-video.mp4 -vframes 1 public/video-poster.webp
+
+Step 4: In the Hero component (src/components/Hero.jsx or equivalent),
+        make sure the canvas reads frames from: /frames/frame_%04d.webp
+        The canvas must be set to: width="1920" height="1080"
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        object-fit: cover;
+
+Step 5: ScrollTrigger must be linked to the canvas frame counter.
+        As the user scrolls down, the frame index increments.
+        Use GSAP ScrollTrigger scrub: true on the frame counter variable.
+        Frame range: frame_0001.webp → last frame (depends on video length).
+
+⚠ Without completing Steps 1–3, the hero section will render as a black
+empty screen. The canvas REQUIRES the /public/frames/ folder to exist
+with at least frame_0001.webp before the page loads.
+
+3.1 Hero Video Theme
+
+The hero video should feel like a dark cybersecurity terminal / hacker
+aesthetic. Suggested visual themes (pick ONE):
+
+-   OPTION A — Matrix-style green code rain falling over a dark server
+    room
+
+-   OPTION B — First-person POV navigating a futuristic dark network
+    topology map
+
+-   OPTION C — Abstract binary data streams and glowing circuit board
+    paths
+
+-   OPTION D — Real footage: dark terminal screen with live Nmap /
+    Wireshark output scrolling
+
+⚠ The video MUST be dark-toned (near-black background) to match the
+overlay layers specified in the original template (bg-black/10,
+vignette, bottom gradient).
+
+3.2 Hero Text Content
+
+⚠ SOCIAL ICONS — REMOVED FROM HERO SECTION
+Do NOT render LinkedIn, Instagram, or Gmail icons anywhere inside the
+Hero section. Remove all social icon markup from the Hero component.
+Social links are available on the Contact page only.
+
+
+▸ Bottom-Left — Large Title (Desktop) / Bottom — Large Title (Mobile/Phone)
+
+Replace 'Cybersecurity Analyst' with:
+
+"Security Analyst & Researcher"
+
+Sub-label beneath (smaller, muted):
+
+"Penetration Testing · AI Security · Cryptography"
+
+⚠ TITLE SCROLL BEHAVIOR — IMPORTANT:
+The title block must NOT use position: fixed or position: sticky.
+It must use position: absolute inside the hero section container only.
+When the user scrolls past the hero section, the title must scroll away
+and disappear naturally with the rest of the hero content.
+Do NOT pin or keep the title visible after the hero section ends.
+The title is hero-only content — it must not follow the user down the page.
+
+⚠ MOBILE PHONE VIEW (max-width: 768px): The title block must be positioned at the
+BOTTOM of the hero section on phone screens. Do NOT render it at the top on mobile.
+Use: position: absolute; bottom: 2rem; top: auto; left: 1rem; right: 1rem; padding-left: 1rem; padding-right: 1rem; box-sizing: border-box; width: calc(100% - 2rem); on small screens.
+
+▸ Bottom-Right — Short Description
+
+"Certified Cybersecurity Spealist.
+
+Currently hunting vulnerabilities at DataCrata.
+
+Published researcher. ICCR Scholar."
+
+⚠ Keep all fonts as Syne (headings) / Satoshi (body) as per original
+spec.
+
+04 | SECTION 2: BENTO GRID (About)
+
+Grid layout (12 columns) is IDENTICAL to original. Only card content
+changes.
+
+Grid Layout (unchanged)
+
+Row 1-2: [Wallpaper Gallery 5col] [Intro Card 7col]
+
+Row 3: [Tools Marquee 6col] [Profile Picture 2col] [Video Card 4col]
+
+Row 4: [Music Player 6col] [Profile cont.] [Video cont.]
+
+Card 1 — Wallpaper Gallery (5 cols, 2 rows)
+
+Replace generic wallpapers with cybersecurity-themed imagery. Infinite
+horizontal scroll, same CSS animation.
+
+▸ Images to use: wall1.webp → wall7.webp (7 images)
+
+-   wall1.webp — Dark terminal with glowing green Nmap scan output
+
+-   wall2.webp — Wireshark packet capture on a dark screen
+
+-   wall3.webp — Kali Linux desktop with multiple tool windows open
+
+-   wall4.webp — Abstract glowing network topology / node graph on black
+
+-   wall5.webp — Close-up of circuit board with cyan/blue lighting
+
+-   wall6.webp — Dark server room corridor with blue LED lighting
+
+-   wall7.webp — Binary code rain or hex dump display, dark green on
+    black
+
+Card 2 — Intro Card (7 cols, 2 rows)
+
+▸ Title
+
+"Hi, I'm Subroto"
+
+▸ Description Text
+
+"I'm a Security Analyst specializing in penetration testing,
+
+AI security research, and cryptographic systems. Currently
+
+breaking things (ethically) at DataCrata in Dhaka.
+
+International Scholar & Researcher "
+
+▸ Message Input Form
+
+Same behavior as original (slide-in success animation). Placeholder
+text:
+
+"Drop a message or a vulnerability report..."
+
+⚠ BUTTON LABEL FIX: The submit button on this form must display the text "SEND"
+NOT "EXEC". Change the button label from "EXEC" to "SEND" in the component.
+Button styling remains the same (cyan background, dark text, same size/padding).
+
+Card 3 — Tools Marquee (6 cols, 1 row)
+
+Replace generic tool logos with cybersecurity tools. Same CSS marquee
+animation.
+
+▸ Tools to display (logos in /public folder)
+
+-   Kali Linux — kali_logo.webp
+
+-   Burp Suite — burpsuite_logo.webp
+
+-   Nmap — nmap_logo.webp
+
+-   Metasploit — metasploit_logo.webp
+
+-   Wireshark — wireshark_logo.webp
+
+-   Nessus — nessus_logo.webp
+
+-   OWASP ZAP — zap_logo.webp
+
+-   Python — python_logo.webp (via CDN or download)
+
+-   AWS — aws_logo.webp (via CDN or download)
+
+-   VirtualBox — virtualbox_logo.webp
+
+-   GitHub — github_logo.webp (invert filter: dark logo)
+
+⚠ Apply invert CSS filter to GitHub, OWASP ZAP, and Nmap logos if they
+are dark-on-white. Same rule as original template.
+
+Card 4 — Profile Picture (2 cols, 2 rows)
+
+Use your own professional photo from your CV.
+
+Filename: mine_pic.webp
+
+This is the same filename as the original template. Simply replace the
+file with your own photo cropped to portrait aspect ratio.
+
+⚠ PROFILE PICTURE FIXES — REQUIRED:
+
+1. SPACE / ZOOM: Increase the card height to show more of the photo.
+   Set the image container to: height: 100%; width: 100%;
+   Set the <img> to: object-fit: cover; object-position: center top;
+   Do NOT crop the top of the photo. The full upper body / face must be visible.
+   If the card originally had overflow: hidden with a small fixed height,
+   increase the card row span or remove the max-height restriction so more
+   of the photo is visible.
+
+2. COLOR — NO FILTER: Do NOT apply any CSS filter, color overlay, tint,
+   grayscale, sepia, hue-rotate, or dark overlay on the profile photo.
+   The photo must render in its original natural colors exactly as the
+   image file appears.
+   Remove any: filter: ..., mix-blend-mode: ..., or overlay <div> with
+   background-color on top of the profile image.
+   The dark overlay + hover gradient effect from the original template
+   must be REMOVED for this card only.
+
+Card 5 — Video Card (4 cols, 2 rows)
+
+Replace carchase.mp4 with a cybersecurity-themed looping video.
+
+Filename: carchase.mp4 (keep same filename, replace content)
+
+▸ Suggested video content (loop, no audio needed)
+
+-   OPTION A — Terminal screen with live Metasploit exploitation demo
+    (blur real IPs)
+
+-   OPTION B — Wireshark live packet capture animation, dark theme
+
+-   OPTION C — Abstract 3D network attack visualization / dark cyber
+    animation
+
+-   OPTION D — Matrix-style data stream, green on black
+
+Mute/unmute toggle button remains in bottom-right corner as per
+original.
+
+Card 6 — Music Player (6 cols, 1 row)
+
+Keep exact same music player UI. Only replace song metadata and files.
+
+▸ Song Details
+
+Song title: "Ghost Protocol"
+
+Artist: "Dark Cyberpunk Lo-Fi"
+
+Filename: NEFFEX_-_Best_of_Me_(mp3.pm).mp3 → replace with your chosen
+track
+
+Filename: songpic.webp → replace with album art for chosen track
+
+⚠ Use a royalty-free dark ambient or lo-fi track. Recommended source:
+pixabay.com/music or freemusicarchive.org — search 'dark ambient',
+'cyberpunk', or 'hacker lofi'.
+
+⚠ PLAY/PAUSE ICON TOGGLE FIX — REQUIRED:
+The play button icon must change dynamically based on audio state.
+Use a boolean state variable: const [isPlaying, setIsPlaying] = useState(false)
+When audio.play() is called → set isPlaying to true → render PAUSE icon (⏸ or ■)
+When audio.pause() is called → set isPlaying to false → render PLAY icon (▶)
+The icon inside the cyan circle button must reflect the current state at all times.
+Do NOT keep the play icon (▶) static when audio is actively playing.
+The toggle must work on every click: play → shows pause, pause → shows play.
+
+05 | ADDITIONAL SECTIONS (Below Bento Grid)
+
+These sections are NOT in the original template but are recommended for
+a cybersecurity portfolio. Add them as full-width sections below the
+Bento Grid.
+
+5.1 Skills & Tools Section
+
+▸ Penetration Testing Tools
+
+-   Nmap, Nessus, Metasploit, Burp Suite, Wireshark, Nikto, OWASP ZAP
+
+▸ Operating Systems
+
+-   Kali Linux,Mint, Parrot OS Ubuntu, Windows Server, VirtualBox, VMWare
+
+▸ Security Domains
+
+-   Web Application Pentesting (SQL Injection, XSS, Prompt Injection)
+
+-   Network Security & Packet Analysis
+
+-   Cryptography & Encryption (SHA-512, hybrid auth systems)
+
+-   AI Agent Security Testing
+
+-   Digital Forensics
+
+5.2 Experience Timeline
+
+▸ Security Analyst — DataCrata, Dhaka (Oct 2025 – Present)
+
+-   Penetration testing on AI agents
+
+-   Identifying prompt injection, SQL injection, XSS vulnerabilities
+
+-   Reporting findings and strengthening system security
+
+▸ Cybersecurity Intern — Prodigy Info Tech, Ahmedabad (May 2024)
+
+-   Developed security prototypes using cryptography & encryption
+
+-   Conducted ethical keystroke and network packet analysis
+
+5.3 Project
+
+
+Title: Enhancing Login Security Using Cryptographic Hashing With
+Password and Image Pattern Authentication
+
+
+Description: Hybrid authentication combining text password, 4×4 image
+pattern grid, and SHA-512 hashing to resist brute-force,
+credential-stuffing, and guessing attacks.
+
+5.4 Certifications
+
+-   Google — Foundations of Cybersecurity (Jun 2023, Coursera)
+
+-   Google — Analyze Data to Answer Questions (Jul 2023, Coursera)
+
+-   AWS — Security Fundamentals Second Edition (Feb 2025)
+
+-   RED TEAM LEADERS — Certified Cybersecurity Educator Professional (CCEP) (Jan 2026)
+
+5.5 Honors & Awards
+
+-   ICCR International Scholar — Indian Council for Cultural Relations
+    (Aug 2022)
+
+-   Awarded to pursue BSc Cybersecurity at Gujarat University
+
+-   G20 Youth Ambassador — Represented Bangladesh at Gujarat University
+    (Jan–Feb 2023)
+
+5.6 Contact Page
+
+Create a dedicated Contact page. Layout: two columns side by side.
+
+▸ Left column — Contact info list with icon circles
+
+Each row: [48px circle icon] [label/link text]
+Circle style: background: #161B22; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+
+Row 1: Envelope SVG icon — subrotoroy1031@gmail.com (mailto link)
+Row 2: Phone SVG icon — (+880) 1705508201
+Row 3: LinkedIn BRAND icon — linkedin.com/in/subrotoroy
+  ⚠ MUST use the official LinkedIn SVG "in" logo (blue #0A66C2), NOT a generic icon.
+  Use this SVG path for the LinkedIn icon:
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#0A66C2">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136
+    2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267
+    5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782
+    13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24
+    1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+  href: https://linkedin.com/in/subrotoroy  target="_blank" rel="noopener noreferrer"
+
+Row 4: Instagram BRAND icon — @su_bro31
+  ⚠ MUST use the official Instagram camera SVG with the pink/orange gradient, NOT a grey icon.
+  Apply this inline SVG with gradient for the Instagram icon:
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+    <defs>
+      <linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#f09433"/>
+        <stop offset="25%" style="stop-color:#e6683c"/>
+        <stop offset="50%" style="stop-color:#dc2743"/>
+        <stop offset="75%" style="stop-color:#cc2366"/>
+        <stop offset="100%" style="stop-color:#bc1888"/>
+      </linearGradient>
+    </defs>
+    <path fill="url(#ig)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919
+    4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771
+    -4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771
+    -1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227
+    1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072
+    2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358
+    2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2
+    6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196
+    -4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324
+    6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0
+    1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+  </svg>
+  href: https://www.instagram.com/su_bro31/  target="_blank" rel="noopener noreferrer"
+
+▸ Right column — Contact Form card
+
+Card style: background: #161B22; border: 1px solid rgba(0,180,216,0.2); border-radius: 12px; padding: 2rem;
+Fields: Name (placeholder: "Target Name"), Email (placeholder: "protocol@domain.com"),
+Message textarea (placeholder: "Enter payload...")
+Submit button text: "SEND PAYLOAD"
+Button style: background: #00B4D8; color: #0D1117; font-weight: bold; width: 100%; padding: 14px;
+Same slide-in success animation as original Bento Grid message form.
+
+05.7 | GLOBAL FOOTER COMPONENT (Appears on ALL Pages)
+
+Create a shared Footer component at src/components/Footer.jsx.
+Import and render it at the BOTTOM of every page (Home, Skills, Projects,
+Certificates, Contact) — just like the Navbar appears at the top.
+
+▸ LAYOUT
+
+The footer sits at the very bottom of every page, full width.
+It is NOT sticky or fixed — it appears naturally at the end of page content.
+
+Container styling:
+  width: 100%;
+  background: #0D1117;
+  border-top: 1px solid rgba(0, 180, 216, 0.15);
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+
+▸ LINE 1 — Copyright Text
+
+Display this text centered on one line:
+  "Copyright © 2025 - All rights reserved"
+
+Font: Satoshi, font-size: 0.85rem, color: #8B949E (muted)
+Do NOT use "2022" — use 2025.
+
+▸ LINE 2 — Social Icons Row
+
+Display 3 social icons in a single horizontal row centered below the copyright text.
+Row style: display: flex; flex-direction: row; gap: 20px; align-items: center; justify-content: center;
+
+Icon 1 — LinkedIn
+  Use the official LinkedIn SVG "in" logo.
+  Wrap in <a href="https://linkedin.com/in/subrotoroy" target="_blank" rel="noopener noreferrer">
+  Icon size: 22×22px
+  Icon color: #0A66C2 (LinkedIn blue)
+  SVG path:
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#0A66C2">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445
+    -2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267
+    2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063
+    2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0
+    23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+  Hover: opacity 0.7, transition 0.2s ease
+
+Icon 2 — Gmail
+  Use a standard envelope SVG icon in Gmail red (#EA4335).
+  Wrap in <a href="mailto:subrotoroy1031@gmail.com">
+  Icon size: 22×22px
+  SVG (envelope outline):
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none"
+    stroke="#EA4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="4" width="20" height="16" rx="2"/>
+    <path d="M2 7l10 7 10-7"/>
+  </svg>
+  Hover: opacity 0.7, transition 0.2s ease
+
+Icon 3 — Instagram
+  Use the official Instagram camera SVG with pink/orange gradient.
+  Wrap in <a href="https://www.instagram.com/su_bro31/" target="_blank" rel="noopener noreferrer">
+  Icon size: 22×22px
+  SVG with gradient:
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+    <defs>
+      <linearGradient id="ig-footer" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#f09433"/>
+        <stop offset="25%" style="stop-color:#e6683c"/>
+        <stop offset="50%" style="stop-color:#dc2743"/>
+        <stop offset="75%" style="stop-color:#cc2366"/>
+        <stop offset="100%" style="stop-color:#bc1888"/>
+      </linearGradient>
+    </defs>
+    <path fill="url(#ig-footer)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691
+    4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664
+    4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771
+    -1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664
+    -4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695
+    .272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618
+    6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618
+    6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78
+    -6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0
+    0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44
+    1.44 0 0 0 0-2.881z"/>
+  </svg>
+  Hover: opacity 0.7, transition 0.2s ease
+
+⚠ USE UNIQUE GRADIENT IDs: The Instagram SVG in the footer uses id="ig-footer" to avoid
+conflicting with the Instagram SVG gradient id="ig" used in the Contact page.
+Always use unique IDs for each inline SVG gradient on the same page.
+
+▸ MOBILE RESPONSIVE (max-width: 768px)
+
+Footer layout remains the same (column, centered).
+Reduce padding to: padding: 20px 16px;
+Icon size stays 22×22px.
+Gap between icons: 16px on mobile.
+
+▸ HOW TO USE IN EVERY PAGE
+
+In each page component (Home.jsx, Skills.jsx, Projects.jsx,
+Certificates.jsx, Contact.jsx), import and place Footer at the bottom:
+
+  import Footer from '../components/Footer';
+  ...
+  return (
+    <div>
+      <Navbar />
+      {/* page content here */}
+      <Footer />
+    </div>
+  );
+
+06 | COMPLETE ASSET DOWNLOAD LIST
+
+All assets below must be placed in the /public folder before building.
+Filenames must match exactly as shown.
+
+6.1 Videos
+
+  -----------------------------------------------------------------------
+  FILENAME         DESCRIPTION            WHERE TO GET        PRIORITY
+  ---------------- ---------------------- ------------------- -----------
+  hero-video.mp4   Dark cyber/hacker      Pexels.com → search REQUIRED
+                   themed video (10-30s   '' or 'cyber        
+                   loop). Matrix rain,    network'. Free      
+                   terminal, or network   download.           
+                   viz                                        
+
+  carchase.mp4     Looping cyber          Pexels.com → search REQUIRED
+                   animation for bento    'cyber security' or 
+                   card. No audio needed. 'network data'.     
+                                          Free download.      
+  -----------------------------------------------------------------------
+
+6.2 Profile & Poster Images
+
+  ---------------------------------------------------------------------------------
+  FILENAME            DESCRIPTION            WHERE TO GET               PRIORITY
+  ------------------- ---------------------- -------------------------- -----------
+  mine_pic.webp       Your own professional  Convert your CV photo to   REQUIRED
+                      photo (portrait crop)  .webp using squoosh.app    
+
+  video-poster.webp   First frame of         Extract with FFmpeg:       REQUIRED
+                      hero-video.mp4 as      ffmpeg -i hero-video.mp4   
+                      poster                 -vframes 1                 
+                                             public/video-poster.webp   
+
+  songpic.webp        Album art for your     Download from the music    REQUIRED
+                      chosen background      source or use a dark       
+                      music track            abstract image from        
+                                             Unsplash                   
+  ---------------------------------------------------------------------------------
+
+6.3 Wallpaper Gallery (wall1–wall7)
+
+  -----------------------------------------------------------------------
+  FILENAME         CONTENT                SEARCH TERM /       PRIORITY
+                                          SOURCE              
+  ---------------- ---------------------- ------------------- -----------
+  wall1.webp       Dark terminal with     Unsplash: 'nmap     REQUIRED
+                   green Nmap scan output terminal dark' or   
+                                          screenshot your own 
+                                          Nmap                
+
+  wall2.webp       Wireshark packet       Screenshot          REQUIRED
+                   capture, dark theme    Wireshark on dark   
+                                          theme, or Unsplash: 
+                                          'packet capture     
+                                          screen'             
+
+  wall3.webp       Kali Linux desktop     Screenshot your     REQUIRED
+                   with tools open        Kali Linux VM, or   
+                                          Unsplash: 'kali     
+                                          linux hacking'      
+
+  wall4.webp       Abstract glowing       Unsplash: 'network  REQUIRED
+                   network node graph on  topology dark' or   
+                   black                  'cyber network      
+                                          visualization'      
+
+  wall5.webp       Close-up circuit board Unsplash: 'circuit  REQUIRED
+                   cyan/blue lighting     board macro blue' — 
+                                          many free options   
+
+  wall6.webp       Dark server room       Unsplash: 'server   REQUIRED
+                   corridor with blue     room dark blue' —   
+                   LEDs                   many free options   
+
+  wall7.webp       Binary code rain or    Unsplash: 'matrix   REQUIRED
+                   hex dump on black      code rain' or       
+                                          'binary dark' —     
+                                          many free options   
+  -----------------------------------------------------------------------
+
+6.4 Tool Logos (Marquee)
+
+  ------------------------------------------------------------------------------------------------
+  FILENAME               TOOL                 WHERE TO GET                           PRIORITY
+  ---------------------- -------------------- -------------------------------------- -------------
+  kali_logo.webp         Kali Linux           kali.org — official logo or WikiMedia  REQUIRED
+                                              Commons                                
+
+  burpsuite_logo.webp    Burp Suite           portswigger.net — press kit, or Google REQUIRED
+                                              Images (official)                      
+
+  nmap_logo.webp         Nmap                 nmap.org — logo available on site      REQUIRED
+
+  metasploit_logo.webp   Metasploit           metasploit.com — official logo         REQUIRED
+
+  wireshark_logo.webp    Wireshark            wireshark.org — official logo download REQUIRED
+
+  nessus_logo.webp       Nessus               tenable.com/products/nessus — media    REQUIRED
+                                              kit                                    
+
+  zap_logo.webp          OWASP ZAP            zaproxy.org — logo on GitHub releases  REQUIRED
+
+  python_logo.webp       Python               python.org/community/logos/ — official REQUIRED
+
+  aws_logo.webp          AWS                  aws.amazon.com/trademark-guidelines/ — REQUIRED
+                                              press kit                              
+
+  virtualbox_logo.webp   VirtualBox           virtualbox.org — logo in press         RECOMMENDED
+                                              resources                              
+
+  github_logo.webp       GitHub               github.com/logos — official mark kit   RECOMMENDED
+  ------------------------------------------------------------------------------------------------
+
+6.5 Audio
+
+  ---------------------------------------------------------------------------------------
+  FILENAME                           DESCRIPTION          WHERE TO GET        PRIORITY
+  ---------------------------------- -------------------- ------------------- -----------
+  NEFFEX_-_Best_of_Me_(mp3.pm).mp3   Dark ambient / lo-fi pixabay.com/music — REQUIRED
+                                     / cyberpunk music    search 'dark        
+                                     track. Rename file   ambient' or         
+                                     to this exact name   'cyberpunk'. 100%   
+                                     OR update filename   free, no            
+                                     in code.             attribution needed. 
+
+  ---------------------------------------------------------------------------------------
+
+07 | COLOR PALETTE & DESIGN TOKENS
+
+These values replace the generic color scheme. Apply to Tailwind config
+and global CSS variables.
+
+▸ Primary Colors
+
+--color-bg-primary: #0D1117 /* GitHub dark black */
+
+--color-bg-secondary: #161B22 /* Card backgrounds */
+
+--color-bg-tertiary: #1C2128 /* Hover states */
+
+--color-accent-cyan: #00B4D8 /* Main accent — CTAs, borders */
+
+--color-accent-blue: #58A6FF /* Secondary accent — links */
+
+--color-accent-green: #39D353 /* Success states, terminal green */
+
+--color-accent-orange: #F0883E /* Warnings, highlights */
+
+--color-text-primary: #E6EDF3 /* Main text */
+
+--color-text-secondary:#C9D1D9 /* Body text */
+
+--color-text-muted: #8B949E /* Muted / placeholder */
+
+▸ Canvas / Hero Overlay (unchanged from original)
+
+bg-black/10 + vignette radial-gradient + bottom from-black/40
+
+canvas filter: saturate(1.25)
+
+08 | TYPOGRAPHY
+
+Same fonts as original template — no changes needed.
+
+-   Headings: Syne — fonts.google.com/specimen/Syne
+
+-   Body: Satoshi — fontshare.com/fonts/satoshi
+
+⚠ For cybersecurity terminals/code blocks inside cards, use 'Courier
+New' or 'JetBrains Mono' (fonts.google.com/specimen/JetBrains+Mono) as a
+monospace accent font.
+
+09 | FRAME GENERATION (Same as Original)
+
+Run this BEFORE building. No changes from original template spec.
+
+mkdir -p public/frames
+
+ffmpeg -i public/hero-video.mp4 \
+
+-vf "scale=1920:1080" \
+
+-c:v libwebp -quality 85 \
+
+-compression_level 6 \
+
+-start_number 1 \
+
+public/frames/frame_%04d.webp
+
+10 | PRE-BUILD CHECKLIST
+
+-   [ ] hero-video.mp4 downloaded and placed in /public
+
+-   [ ] ffmpeg frame extraction command run →
+    /public/frames/frame_0001.webp ... exists
+
+-   [ ] video-poster.webp generated from frame 1
+
+-   [ ] mine_pic.webp — your photo converted to WebP
+
+-   [ ] wall1.webp through wall7.webp — all 7 cyber wallpapers ready
+
+-   [ ] All 11 tool logos downloaded and converted to .webp
+
+-   [ ] carchase.mp4 — cyber looping video ready
+
+-   [ ] Audio .mp3 file ready and renamed correctly
+
+-   [ ] songpic.webp — album art ready
+
+-   [ ] Tailwind config updated with cybersecurity color palette
+
+-   [ ] LinkedIn URL updated in Hero section (top-right links)
+
+-   [ ] src/components/Footer.jsx created with copyright text and 3 social icons
+
+-   [ ] Footer imported and placed at the bottom of ALL 5 page components
+
+// END OF BUILD DIRECTION //
+
+Subroto Roy — Cybersecurity Portfolio v1.0
